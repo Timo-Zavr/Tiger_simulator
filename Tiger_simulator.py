@@ -14,6 +14,7 @@ class Rabbit:
     def __init__(self, y, x):
         self.y = y
         self.x = x
+        
     
 
 class Tiger:
@@ -43,12 +44,24 @@ class Tiger:
         else:
             self.emout = "Выслеживает добычу"
     def atack(self):
-        pass
+        kd = random.choice(["yes","no"])
+        self.y = R1.y
+        self.x = R1.x
+        reset_doard()
+        if kd == "yes":
+            self.emout = "Сытый тигр идёт домой"
+            return True
+        elif kd == "no":
+            self.emout = "Тигр не поймал зайца"
+            return False
+
+            # R1.y = random.randint(0,4)
+            # R1.x = random.randint(0,4)
 
 T = Tiger()
 R1 = Rabbit(random.randint(0,4), random.randint(0,4))
-if R1.y == 0 and R1.x == 0:
-    R1 = Rabbit(random.randint(0,4), random.randint(0,4))
+# if R1.y == 0 and R1.x == 0:
+#     R1 = Rabbit(random.randint(0,4), random.randint(0,4))
 area = [["🌿","🌿","🌿","🌿","🌿"],
         ["🌿","🌿","🌿","🌿","🌿"],
         ["🌿","🌿","🌿","🌿","🌿"],
@@ -56,6 +69,8 @@ area = [["🌿","🌿","🌿","🌿","🌿"],
         ["🌿","🌿","🌿","🌿","🌿"]]
 
 def reset_doard():
+    time.sleep(0.25)
+    clear()
     for y in range(5):
         area[y] = ["🌿","🌿","🌿","🌿","🌿"]
     area[R1.y][R1.x] = "🐰"
@@ -67,15 +82,30 @@ def reset_doard():
         print(line)
 
 while True:
-    T.is_raddit()
     if T.emout == "Выслеживает добычу":
+        T.wolk()
+        reset_doard()
+        T.is_raddit()
+        print(T.emout)
+    elif T.emout == "Тигр атакует!":
         reset_doard()
         print(T.emout)
-        T.wolk()
-        time.sleep(0.1)
-        clear()
+        if not T.atack():
+            reset_doard()
+            print(T.emout)
+            time.sleep(0.5)
+            R1.y = random.randint(0,4)
+            R1.x = random.randint(0,4)
+            T.emout = "Выслеживает добычу"
+    elif T.emout == "Сытый тигр идёт домой":
+        T.x = 0
+        T.y = 0
+        R1.y = 0
+        R1.x = 0
+        reset_doard()
+        print(T.emout)
+        break
     else:
         reset_doard()
         print(T.emout)
-        time.sleep(1)
         break
