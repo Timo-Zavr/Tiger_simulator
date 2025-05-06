@@ -57,6 +57,7 @@ class Tiger:
 
             # R1.y = random.randint(0,4)
             # R1.x = random.randint(0,4)
+            # R1.x = random.randint(0,4)
 
 T = Tiger()
 R1 = Rabbit(random.randint(0,4), random.randint(0,4))
